@@ -1,24 +1,18 @@
 const prisma = require("../databases/prisma");
 const AlunoInvalidoError = require("../errors/AlunoInvalidoError");
+const AlunoNaoEncontradoError = require("../errors/AlunoNaoEncontradoError");
 const PaginacaoInvalidaError = require("../errors/PaginacaoInvalidaError");
 
 class AlunoService {
 
-<<<<<<< HEAD
     async findMany(page, pageSize, orderBy, order) {
         //SELECT * FROM alunos
 
-=======
-    async findMany(page, pageSize) {
-        //SELECT * FROM alunos
-        
->>>>>>> 234bc499951ed8dcaff98b2eab2618213dc0ff40
         page = Number(page);
         pageSize = Number(pageSize);
         if(!page || !page < 1 || !pageSize || !pageSize < 1){
             throw new PaginacaoInvalidaError();
         }
-<<<<<<< HEAD
 
         const alunos = await prisma.aluno.findMany({
             skip: (page - 1) * pageSize,
@@ -31,24 +25,27 @@ class AlunoService {
         const total = await prisma.aluno.count();
 
         return { alunos, total };
-=======
-        const alunos = await prisma.aluno.findMany({
-            skip: (page - 1) * pageSize,
-            take: Number(pageSize)
+    }
+
+    async findUnique(id) {
+        const aluno = await prisma.aluno.findUnique({
+            where: {
+                id: Number(id)
+            }
         });
-        return alunos;
->>>>>>> 234bc499951ed8dcaff98b2eab2618213dc0ff40
+
+        if (!aluno) {
+            throw new AlunoNaoEncontradoError();
+        }
+
+        return aluno;
     }
 
     async create(aluno) {
         //create = insert
         //update = update
         //delete = delete
-<<<<<<< HEAD
         //findMany = select *
-=======
-        //findMany = select * from
->>>>>>> 234bc499951ed8dcaff98b2eab2618213dc0ff40
 
         const {nome, email} = aluno;
         if(!nome || !email){
@@ -59,8 +56,4 @@ class AlunoService {
     }
 }
 
-<<<<<<< HEAD
 module.exports = new AlunoService();
-=======
-module.exports = new AlunoService();
->>>>>>> 234bc499951ed8dcaff98b2eab2618213dc0ff40
