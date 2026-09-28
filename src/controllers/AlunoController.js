@@ -4,6 +4,7 @@ class AlunoController {
 
     async findMany(request, response) {
         try{
+<<<<<<< HEAD
             let { page, pageSize, orderBy, order } = request.query;
             page ||= 1;
             pageSize ||= 10;
@@ -22,6 +23,14 @@ class AlunoController {
             );
 
             return response.status(200).json(resultado);
+=======
+            let { page, pageSize } = request.query;
+            page ||= 1;
+            pageSize ||= 10;
+            
+            const alunos = await alunoService.findMany(page, pageSize);
+            return response.status(200).json({ alunos });
+>>>>>>> 234bc499951ed8dcaff98b2eab2618213dc0ff40
         } catch(e){
             return response.status(e.statusCode).json({error: e.message});
         }
@@ -37,4 +46,8 @@ class AlunoController {
     }
 }
 
+<<<<<<< HEAD
 module.exports = new AlunoController();
+=======
+module.exports = new AlunoController();
+>>>>>>> 234bc499951ed8dcaff98b2eab2618213dc0ff40
